@@ -41,7 +41,14 @@ public class Success extends Activity {
                 if(i==0){
                     Intent intent=new Intent(Success.this,Show.class);
                     startActivity(intent);
-                }else{
+                }else if(i==1){
+                    Intent intent = new Intent(Success.this, SettingActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("character","1111");
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+                else{
                     Toast.makeText(Success.this,"你点击了第"+(i+1)+"项",Toast.LENGTH_LONG).show();
                 }
 
