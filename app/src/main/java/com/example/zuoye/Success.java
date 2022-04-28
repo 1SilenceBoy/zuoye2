@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +47,16 @@ public class Success extends Activity {
                     Bundle bundle = new Bundle();
                     bundle.putString("character","1111");
                     intent.putExtras(bundle);
+                    startActivity(intent);
+                }else if(i==2){
+                    User user=new User();
+                    user.setName("username");
+                    user.setPwd("password");
+                    Intent intent=new Intent();
+                    intent.putExtra("int",1);
+                    intent.putExtra("byte",0);
+                    intent.putExtra("serializable",user);
+                    intent.setClass(Success.this,IntentActivity.class);
                     startActivity(intent);
                 }
                 else{

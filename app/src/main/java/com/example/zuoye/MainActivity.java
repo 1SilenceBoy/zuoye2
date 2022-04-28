@@ -37,7 +37,8 @@ public class MainActivity extends Activity {
                 editor.putString("PASSWORD",password.getText().toString());
                 //提交数据
                 editor.commit();
-                Intent intent=new Intent(MainActivity.this,Success.class);
+                Intent intent=new Intent();
+                intent.setClass(MainActivity.this,Success.class);
                 startActivity(intent);
             }
         });
