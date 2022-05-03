@@ -3,8 +3,6 @@ package com.example.zuoye;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
-
 public class User implements Parcelable {
 
     private String pwd;

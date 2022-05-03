@@ -5,25 +5,20 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
-
 import androidx.annotation.Nullable;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Show extends Activity {
 
-    final private  int ImageId[]=new int[]{R.drawable.a,R.drawable.b,R.drawable.c};
+    final private  int ImageId[] = new int[]{R.drawable.a, R.drawable.b, R.drawable.c};
     String[] title = {"图片1", "图片2", "图片3"};
     ArrayList<Map<String, Object>> list = new ArrayList<>();
     private ProgressBar progressBar;
@@ -38,7 +33,7 @@ public class Show extends Activity {
         setContentView(R.layout.show);
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.title);
         progressBar = findViewById(R.id.bar);
-        gridView=findViewById(R.id.gridview);
+        gridView = findViewById(R.id.gridview);
         new MyTack().execute();
         gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override

@@ -1,9 +1,6 @@
 package com.example.zuoye;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class MainActivity extends Activity {
+
     EditText username;
     EditText password;
     private SharedPreferences loginPreference;
@@ -20,9 +18,9 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        username =(EditText)findViewById(R.id.UserName);
-        password=(EditText) findViewById(R.id.Password);
-        Button bt=(Button) findViewById(R.id.button);
+        username = (EditText)findViewById(R.id.UserName);
+        password = (EditText) findViewById(R.id.Password);
+        Button bt = (Button) findViewById(R.id.button);
         loginPreference = getSharedPreferences("login", MODE_PRIVATE);
         String saved_username = loginPreference.getString("USERNAME", "");
         String saved_password = loginPreference.getString("PASSWORD","");
