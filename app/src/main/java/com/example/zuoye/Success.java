@@ -19,8 +19,8 @@ public class Success extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listview);
         ListView listView = (ListView) findViewById(R.id.lv1);
-        int[] Id = new int[]{1, 2, 3, 4, 5,6};
-        String[] title = new String[]{"进度条", "亮度", "连网", "手机设置", "记账本","下载播放音乐"};
+        int[] Id = new int[]{1, 2, 3, 4, 5, 6, 7};
+        String[] title = new String[]{"进度条", "亮度", "连网", "手机设置", "记账本", "下载播放音乐", "音乐播放器"};
         List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
         for (int i = 0;i<Id.length;i++){
             Map<String,Object>map = new HashMap<>();
@@ -67,6 +67,11 @@ public class Success extends Activity {
                 else if (i == 5){
                     Intent intent = new Intent();
                     intent.setClass(Success.this,MusicActivity.class);
+                    startActivity(intent);
+                }
+                else if (i == 6){
+                    Intent intent = new Intent();
+                    intent.setClass(Success.this,MusicRadioActivity.class);
                     startActivity(intent);
                 }
 
