@@ -1,94 +1,97 @@
 package com.example.zuoye;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-
+import android.widget.AdapterView;
+import android.widget.GridView;
+import android.widget.ProgressBar;
+import android.widget.SimpleAdapter;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Show extends Activity {
 
-    final private  int ImageId[]=new int[]{R.drawable.a,R.drawable.b,R.drawable.c};
-    private LinearLayout linearLayout;
+    final private  int ImageId[] = new int[]{R.drawable.a, R.drawable.b, R.drawable.c};
+    String[] title = {"图片1", "图片2", "图片3"};
+    ArrayList<Map<String, Object>> list = new ArrayList<>();
+    private ProgressBar progressBar;
+    private GridView gridView;
+    private SimpleAdapter adapter;
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_PROGRESS);//显示水平进度条
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.show);
-        linearLayout=(LinearLayout)findViewById(R.id.linear);
+        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.title);
+        progressBar = findViewById(R.id.bar);
+        gridView = findViewById(R.id.gridview);
         new MyTack().execute();
-    }
+        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-    class MyTack extends AsyncTask<Void,Integer,LinearLayout>{
-
-        @Override
-        protected void onPreExecute() {
-            setProgressBarVisibility(true);
-            setProgressBarIndeterminateVisibility(true);
-            super.onPreExecute();
-        }
-
-        @Override
-        protected LinearLayout doInBackground(Void... voids) {
-            LinearLayout ll=new LinearLayout(Show.this);
-            for (int i=0;i<3;i++){
-                ImageView iv=new ImageView(Show.this);
-                iv.setLayoutParams(new LinearLayout.LayoutParams(245,108));
-                iv.setImageResource(ImageId[i]);
-                ll.addView(iv);
-                iv.setOnLongClickListener(new View.OnLongClickListener() {
+                android.app.AlertDialog.Builder builder = new AlertDialog.Builder(Show.this);
+                builder.setTitle("是否删除？");
+                builder.setMessage("是否真的要删除嘛？");
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
-                    public boolean onLongClick(View view) {
-                        android.app.AlertDialog dialog=new android.app.AlertDialog.Builder(Show.this).create();
-                        dialog.setTitle("删除？");
-                        dialog.setMessage("确认删除嘛？");
-                        dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "取消", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int p) {
-                            }
-                        });
-                        dialog.setButton(DialogInterface.BUTTON_POSITIVE, "确认", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int p) {
+                    public void onClick(DialogInterface dialog, int which) {
 
-                            }
-                        });
-                        dialog.show();
-                        return true;
                     }
                 });
+                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        list.remove(position);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+                builder.create().show();
+                return true;
+            }
+        });
+    }
+    class MyTack extends AsyncTask<Void,Integer,SimpleAdapter>{
+        @Override
+        protected SimpleAdapter doInBackground(Void... params) {
+            for (int i = 0; i < ImageId.length; i++) {
+                HashMap<String, Object> map = new HashMap<>();
+                map.put("imageview",ImageId[i]);
+                map.put("titleview",title[i]);
                 try {
-                    Thread.sleep(100);
+                    list.add(map);
+                    Thread.sleep(600);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                publishProgress(i+1);
+                publishProgress(i);
             }
-            return ll;
+            adapter = new SimpleAdapter(Show.this,
+                    list, R.layout.items, new String[]{"titleview", "imageview"}, new int[]{R.id.titleview, R.id.imageview});
+            return adapter;
         }
-
         @Override
         protected void onProgressUpdate(Integer... values) {
+            progressBar.setProgress(values[0]*40);
             super.onProgressUpdate(values);
-            setProgress(values[0]*2500);
         }
-
         @Override
-        protected void onPostExecute(LinearLayout result) {
-            setProgressBarVisibility(false);
-            linearLayout.addView(result);
+        protected void onPostExecute(SimpleAdapter result) {
+            progressBar.setVisibility(View.GONE);
+            gridView.setAdapter(result);
             super.onPostExecute(result);
-
         }
     }
+
 }
 
 

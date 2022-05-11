@@ -8,9 +8,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,29 +18,68 @@ public class Success extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listview);
-        ListView listView=(ListView) findViewById(R.id.lv1);
-        int[] Id=new int[]{1,2,3,4,5};
-        String[] title=new String[]{"Sam","Dam","Lili","Jack","Yoh"};
-        List<Map<String,Object>> list=new ArrayList<Map<String,Object>>();
-        for (int i=0;i<Id.length;i++){
-            Map<String,Object>map =new HashMap<>();
-            map.put("id",Id[i]);
-            map.put("title",title[i]);
+        ListView listView = (ListView) findViewById(R.id.lv1);
+        int[] Id = new int[]{1, 2, 3, 4, 5, 6, 7, 8};
+        String[] title = new String[]{"进度条", "亮度", "连网", "手机设置", "记账本", "下载播放音乐", "音乐播放器", "内存情况"};
+        List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
+        for (int i = 0;i<Id.length;i++){
+            Map<String,Object>map = new HashMap<>();
+            map.put("id", Id[i]);
+            map.put("title", title[i]);
             list.add(map);
         }
-        SimpleAdapter adapter=new SimpleAdapter(this,list,R.layout.main,new String[]{"title","id"},new int[]{
-                R.id.title2,R.id.title1
+        SimpleAdapter adapter=new SimpleAdapter(this,list, R.layout.main, new String[]{"title","id"}, new int[]{
+                R.id.title2, R.id.title1
         });
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if(i==0){
-                    Intent intent=new Intent(Success.this,Show.class);
+                if(i == 0){
+                    Intent intent = new Intent(Success.this, Show.class);
                     startActivity(intent);
-                }else{
-                    Toast.makeText(Success.this,"你点击了第"+(i+1)+"项",Toast.LENGTH_LONG).show();
+                }else if(i == 1){
+                    Intent intent = new Intent(Success.this, SettingActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("character", "1111");
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }else if(i == 2){
+                    User user=new User();
+                    user.setName("username");
+                    user.setPwd("password");
+                    Intent intent=new Intent();
+                    intent.putExtra("int", 1);
+                    intent.putExtra("byte", 0);
+                    intent.putExtra("serializable", user);
+                    intent.setClass(Success.this, IntentActivity.class);
+                    startActivity(intent);
+                }else if (i == 3){
+                    Intent intent = new Intent();
+                    intent.setClass(Success.this,PhoneActivity.class);
+                    startActivity(intent);
                 }
+                else if (i == 4){
+                    Intent intent = new Intent();
+                    intent.setClass(Success.this,BookKeppingActivity.class);
+                    startActivity(intent);
+                }
+                else if (i == 5){
+                    Intent intent = new Intent();
+                    intent.setClass(Success.this,MusicActivity.class);
+                    startActivity(intent);
+                }
+                else if (i == 6){
+                    Intent intent = new Intent();
+                    intent.setClass(Success.this,MusicRadioActivity.class);
+                    startActivity(intent);
+                }
+                else if (i == 7){
+                    Intent intent = new Intent();
+                    intent.setClass(Success.this,ListenerActivity.class);
+                    startActivity(intent);
+                }
+
 
             }
         });
