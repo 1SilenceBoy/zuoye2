@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">zuoye</string>
+    <string name="current_memory">192.0</string>
+    <string name="service_start" />
 </resources>

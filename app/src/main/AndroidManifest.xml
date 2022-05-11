@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.zuoye">
+    package="com.example.zuoye"
+    android:versionCode="1"
+    android:versionName="1.0">
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -39,6 +42,16 @@
         <activity android:name=".BookKeppingActivity"/>
         <activity android:name=".MusicActivity"/>
         <activity android:name=".MusicRadioActivity"/>
+        <receiver android:name=".ListenerReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+        <service android:name=".Myservice"/>
+        <activity android:name=".BackActivity"
+            android:theme="@android:style/Theme.NoDisplay"/>
+        <activity android:name=".ListenerActivity"/>
     </application>
 
 </manifest>
